@@ -22,7 +22,7 @@ public class BerichtenLuisteraar {
 
 
     
-  @RabbitListener(queues = "queue1",autoStartup = "false")
+  @RabbitListener(queues = "queue1")
 public void verwerkBericht(BerichtGemaakt bericht) {
     try {
         sse.getEmitter().send(bericht);
