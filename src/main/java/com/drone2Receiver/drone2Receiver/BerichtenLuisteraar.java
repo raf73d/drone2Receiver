@@ -22,14 +22,12 @@ public class BerichtenLuisteraar {
 
 
     
-    @RabbitListener(queues = "queue1")
-    void verwerkBericht (BerichtGemaakt bericht){
-        try {
-            sse.getEmitter().send(bericht);
-        } catch (IOException e) {
-            e.getMessage();
-        }
-
- 
+  @RabbitListener(queues = "queue1")
+public void verwerkBericht(BerichtGemaakt bericht) {
+    try {
+        sse.getEmitter().send(bericht);
+    } catch (Exception e) {
+        System.out.println("SSE fout: " + e.getMessage());
     }
+}
 }
