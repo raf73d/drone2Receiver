@@ -13,6 +13,8 @@ import java.time.LocalDate;
 public class BerichtGemaakt {
     private String bericht;
     private LocalDate datum;
+     public BerichtGemaakt(){
+}
 
     public String getBericht() {
         return bericht;
@@ -20,6 +22,14 @@ public class BerichtGemaakt {
 
     public LocalDate getDatum() {
         return datum;
+    }
+
+    public void setBericht(String bericht) {
+        this.bericht = bericht;
+    }
+
+    public void setDatum(LocalDate datum) {
+        this.datum = datum;
     }
     
     
