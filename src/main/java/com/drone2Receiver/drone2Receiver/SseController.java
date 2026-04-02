@@ -14,16 +14,35 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
  */
 @RestController
 public class SseController {
-    private final SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
+
+    private SseEmitter emitter;
 
     @GetMapping("/events")
-    public SseEmitter stream() {
+    public synchronized SseEmitter stream() {
+
+        // Als er al een emitter bestaat → sluiten en vervangen
+        if (emitter != null) {
+            try {
+                emitter.complete();
+            } catch (Exception ignored) {}
+        }
+
+        emitter = new SseEmitter(Long.MAX_VALUE);
+
+        emitter.onCompletion(() -> emitter = null);
+        emitter.onTimeout(() -> emitter = null);
+        emitter.onError(e -> emitter = null);
+
         return emitter;
     }
 
-    public SseEmitter getEmitter() {
-        return emitter;
+    public synchronized void send(Object data) {
+        if (emitter != null) {
+            try {
+                emitter.send(SseEmitter.event().data(data));
+            } catch (Exception e) {
+                emitter = null; // emitter is dood → resetten
+            }
+        }
     }
-
-
 }

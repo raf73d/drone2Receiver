@@ -4,7 +4,6 @@
  */
 package com.drone2Receiver.drone2Receiver;
 
-import java.io.IOException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -20,14 +19,9 @@ public class BerichtenLuisteraar {
         this.sse = sse;
     }
 
+@RabbitListener(queues = "queue1")
+    public void verwerkBericht(BerichtGemaakt bericht) {
+        sse.send(bericht);
+    }  
 
-    
-  @RabbitListener(queues = "queue1")
-public void verwerkBericht(BerichtGemaakt bericht) {
-    try {
-        sse.getEmitter().send(bericht);
-    } catch (Exception e) {
-        System.out.println("SSE fout: " + e.getMessage());
-    }
-}
 }
