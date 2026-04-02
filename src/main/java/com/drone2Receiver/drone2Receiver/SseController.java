@@ -4,6 +4,7 @@
  */
 package com.drone2Receiver.drone2Receiver;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public class SseController {
 
     private SseEmitter emitter;
-
+    @CrossOrigin
     @GetMapping("/events")
     public synchronized SseEmitter stream() {
 
