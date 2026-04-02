@@ -13,11 +13,12 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
  *
  * @author rafde
  */
+@CrossOrigin
 @RestController
 public class SseController {
 
     private SseEmitter emitter;
-    @CrossOrigin
+   
     @GetMapping("/events")
     public synchronized SseEmitter stream() {
 
